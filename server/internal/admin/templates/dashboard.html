@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <style>
+    body { font-family: sans-serif; margin: 24px; }
+    .cards { display: grid; grid-template-columns: repeat(5, minmax(180px,1fr)); gap: 12px; margin-bottom: 20px; }
+    .card { border: 1px solid #ddd; padding: 12px; border-radius: 8px; }
+    table { border-collapse: collapse; width: 100%; margin-bottom: 16px; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    th { background: #f5f5f5; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Universal GoodTURN SFU — Admin</h1>
+  <div class="cards">
+    <div class="card"><strong>Users</strong><div>{{.Stats.UsersTotal}}</div></div>
+    <div class="card"><strong>Active configs</strong><div>{{.Stats.ActiveConfigs}}</div></div>
+    <div class="card"><strong>Active sessions</strong><div>{{.Stats.ActiveSessions}}</div></div>
+    <div class="card"><strong>Pending payments</strong><div>{{.Stats.PendingPayments}}</div></div>
+    <div class="card"><strong>Notify queue</strong><div>{{.Stats.PendingNotifyQ}}</div></div>
+  </div>
+
+  <div class="grid">
+    <section>
+      <h2>Users</h2>
+      <form hx-post="/admin/sessions/reset" hx-target="#users-table" hx-swap="innerHTML">
+        <input name="user_id" placeholder="user_id for reset sessions" />
+        <button>Reset sessions</button>
+      </form>
+      <button hx-get="/admin/users?limit=100" hx-target="#users-table" hx-swap="innerHTML">Refresh users</button>
+      <div id="users-table">{{template "users_table.html" .}}</div>
+    </section>
+
+    <section>
+      <h2>Server instances</h2>
+      <form hx-post="/admin/instances/create" hx-target="#instances-table" hx-swap="innerHTML">
+        <input name="name" placeholder="name" required />
+        <input name="region" placeholder="region" />
+        <input name="host" placeholder="host" required />
+        <input name="port" placeholder="port" value="443" />
+        <button>Create</button>
+      </form>
+      <button hx-get="/admin/instances?limit=100" hx-target="#instances-table" hx-swap="innerHTML">Refresh instances</button>
+      <div id="instances-table">{{template "instances_table.html" .}}</div>
+    </section>
+  </div>
+
+  <h2>Payments</h2>
+  <button hx-get="/admin/payments?limit=100" hx-target="#payments-table" hx-swap="innerHTML">Refresh payments</button>
+  <div id="payments-table">{{template "payments_table.html" .}}</div>
+
+  <h2>Notifications queue</h2>
+  <button hx-get="/admin/notifications?limit=100" hx-target="#notifications-table" hx-swap="innerHTML">Refresh notifications</button>
+  <div id="notifications-table">{{template "notifications_table.html" .}}</div>
+</body>
+</html>

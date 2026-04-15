@@ -1,0 +1,8 @@
+<table>
+  <thead><tr><th>ID</th><th>User</th><th>Kind</th><th>Status</th><th>Scheduled</th></tr></thead>
+  <tbody>
+    {{range .Notifications}}
+    <tr><td>{{.ID}}</td><td>{{.UserID}}</td><td>{{.Kind}}</td><td>{{.Status}}</td><td>{{.ScheduledFor}}</td></tr>
+    {{else}}<tr><td colspan="5">No notifications</td></tr>{{end}}
+  </tbody>
+</table>

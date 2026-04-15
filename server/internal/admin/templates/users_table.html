@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Telegram ID</th>
+      <th>Tariff</th>
+      <th>Max devices</th>
+      <th>Subscription end</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{range .Users}}
+    <tr>
+      <td>{{.ID}}</td>
+      <td>{{.TelegramID}}</td>
+      <td>{{.Tariff}}</td>
+      <td>{{.MaxDevices}}</td>
+      <td>{{.SubscriptionEnd}}</td>
+    </tr>
+    {{else}}
+    <tr><td colspan="5">No users</td></tr>
+    {{end}}
+  </tbody>
+</table>

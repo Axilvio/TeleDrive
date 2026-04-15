@@ -1,0 +1,15 @@
+services:
+  server:
+    build:
+      context: ../../server
+      dockerfile: Dockerfile
+      target: builder
+    command: ["go", "run", "./cmd/app"]
+    working_dir: /src
+    volumes:
+      - ../../server:/src
+    environment:
+      APP_ENV: development
+      HTTP_ADDR: :8080
+    ports:
+      - "8080:8080"

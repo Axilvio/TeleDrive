@@ -1,0 +1,8 @@
+<table>
+  <thead><tr><th>ID</th><th>User</th><th>Amount</th><th>Status</th><th>Provider</th><th>Created</th></tr></thead>
+  <tbody>
+    {{range .Payments}}
+    <tr><td>{{.ID}}</td><td>{{.UserID}}</td><td>{{.Amount}}</td><td>{{.Status}}</td><td>{{.Provider}}</td><td>{{.CreatedAt}}</td></tr>
+    {{else}}<tr><td colspan="6">No payments</td></tr>{{end}}
+  </tbody>
+</table>
